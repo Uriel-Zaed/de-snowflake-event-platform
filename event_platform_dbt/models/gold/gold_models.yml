@@ -1,0 +1,131 @@
+version: 2
+
+models:
+  - name: gold_daily_metrics
+    description: "Daily business metrics such as active users, sessions, revenue, and purchase activity."
+
+    columns:
+      - name: event_date
+        description: "Date of the events."
+        tests:
+          - not_null
+          - unique
+
+      - name: total_events
+        description: "Total number of clean events on this date."
+        tests:
+          - not_null
+
+      - name: daily_active_users
+        description: "Number of distinct users active on this date."
+        tests:
+          - not_null
+
+      - name: total_sessions
+        description: "Number of distinct sessions on this date."
+
+      - name: total_revenue
+        description: "Total purchase revenue on this date."
+
+      - name: avg_order_value
+        description: "Average purchase amount on this date."
+
+      - name: purchase_events_per_session
+        description: "Ratio of purchase events to total sessions."
+
+  - name: gold_events_by_type_daily
+    description: "Daily event counts and unique users by event type."
+
+    columns:
+      - name: event_date
+        description: "Date of the events."
+        tests:
+          - not_null
+
+      - name: event_type
+        description: "Type of event."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - view_product
+                  - add_to_cart
+                  - purchase
+                  - login
+                  - logout
+                  - search
+
+      - name: event_count
+        description: "Number of events for this event type and date."
+        tests:
+          - not_null
+
+      - name: unique_users
+        description: "Number of unique users for this event type and date."
+
+  - name: gold_revenue_by_country_daily
+    description: "Daily purchase revenue aggregated by country."
+
+    columns:
+      - name: event_date
+        description: "Date of the events."
+        tests:
+          - not_null
+
+      - name: country
+        description: "Country code."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - IL
+                  - US
+                  - GB
+                  - DE
+                  - FR
+                  - ES
+
+      - name: purchase_events
+        description: "Number of purchase events."
+
+      - name: total_revenue
+        description: "Total purchase revenue."
+
+      - name: purchasing_users
+        description: "Number of unique users who purchased."
+
+      - name: revenue_per_purchasing_user
+        description: "Revenue divided by number of purchasing users."
+
+  - name: gold_conversion_funnel_daily
+    description: "Daily user-based conversion funnel from product view to add to cart to purchase."
+
+    columns:
+      - name: event_date
+        description: "Date of the funnel."
+        tests:
+          - not_null
+          - unique
+
+      - name: active_users
+        description: "Number of active users."
+
+      - name: users_viewed_product
+        description: "Users who viewed at least one product."
+
+      - name: users_added_to_cart
+        description: "Users who added at least one product to cart."
+
+      - name: users_purchased
+        description: "Users who purchased at least once."
+
+      - name: view_to_cart_rate
+        description: "Users added to cart divided by users viewed product."
+
+      - name: cart_to_purchase_rate
+        description: "Users purchased divided by users added to cart."
+
+      - name: view_to_purchase_rate
+        description: "Users purchased divided by users viewed product."

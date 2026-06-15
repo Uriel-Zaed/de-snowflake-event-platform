@@ -1,0 +1,21 @@
+version: 2
+
+sources:
+  - name: raw
+    database: EVENT_PLATFORM
+    schema: RAW
+    description: "Raw event data loaded from local JSONL files into Snowflake."
+    tables:
+      - name: raw_events
+        description: "Raw JSON event records stored as VARIANT."
+        columns:
+          - name: raw_event
+            description: "Original JSON event object."
+            tests:
+              - not_null
+
+          - name: source_filename
+            description: "Name of the staged source file."
+
+          - name: loaded_at
+            description: "Timestamp when the row was loaded into Snowflake."

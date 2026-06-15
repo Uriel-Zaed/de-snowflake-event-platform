@@ -1,0 +1,70 @@
+version: 2
+
+models:
+  - name: bronze_events
+    description: "Parsed and typed event records extracted from raw JSON events."
+
+    columns:
+      - name: event_id
+        description: "Unique event identifier."
+        tests:
+          - not_null
+          - unique
+
+      - name: user_id
+        description: "User identifier."
+        tests:
+          - not_null
+
+      - name: session_id
+        description: "Session identifier."
+        tests:
+          - not_null
+
+      - name: event_type
+        description: "Type of product event."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - view_product
+                  - add_to_cart
+                  - purchase
+                  - login
+                  - logout
+                  - search
+
+      - name: event_timestamp
+        description: "Timestamp when the event occurred."
+        tests:
+          - not_null
+
+      - name: event_date
+        description: "Date extracted from event_timestamp."
+
+      - name: country
+        description: "Country code."
+        tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - IL
+                  - US
+                  - GB
+                  - DE
+                  - FR
+                  - ES
+
+      - name: device
+        description: "Device type."
+        tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - ios
+                  - android
+                  - web
+
+      - name: price
+        description: "Purchase price. Should only be populated for purchase events."

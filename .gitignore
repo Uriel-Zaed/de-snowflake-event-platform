@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Environment and secrets
+.env
+.venv/
+
+# Local data
+data/raw/*.jsonl
+data/raw/*.csv
+data/raw/*.parquet
+
+# Mac
+.DS_Store
+
+# dbt
+event_platform_dbt/target/
+event_platform_dbt/dbt_packages/
+event_platform_dbt/logs/
+
+logs/
+
+.idea/
+
+.python-version

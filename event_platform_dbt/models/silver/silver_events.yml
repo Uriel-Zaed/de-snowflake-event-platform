@@ -1,0 +1,109 @@
+version: 2
+
+models:
+  - name: int_events_validated
+    description: "Intermediate validation model that ranks events by event_id and assigns rejection reasons."
+
+    columns:
+      - name: event_id
+        description: "Unique event identifier."
+
+      - name: row_num
+        description: "Row number used to identify duplicate event IDs."
+
+      - name: rejection_reason
+        description: "Reason why an event should be rejected. Null means the event is valid."
+
+  - name: silver_events_clean
+    description: "Validated, deduplicated, analytics-ready event records."
+
+    columns:
+      - name: event_id
+        description: "Unique event identifier."
+        tests:
+          - not_null
+          - unique
+
+      - name: user_id
+        description: "User identifier."
+        tests:
+          - not_null
+
+      - name: session_id
+        description: "Session identifier."
+        tests:
+          - not_null
+
+      - name: event_type
+        description: "Type of event."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - view_product
+                  - add_to_cart
+                  - purchase
+                  - login
+                  - logout
+                  - search
+
+      - name: event_timestamp
+        description: "Timestamp when the event occurred."
+        tests:
+          - not_null
+
+      - name: event_date
+        description: "Date extracted from event_timestamp."
+        tests:
+          - not_null
+
+      - name: country
+        description: "Country code."
+        tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - IL
+                  - US
+                  - GB
+                  - DE
+                  - FR
+                  - ES
+
+      - name: device
+        description: "Device type."
+        tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - ios
+                  - android
+                  - web
+
+      - name: price
+        description: "Purchase price. Null for non-purchase events."
+
+  - name: silver_events_rejected
+    description: "Events rejected from the clean Silver table due to validation or deduplication issues."
+
+    columns:
+      - name: rejection_reason
+        description: "Reason why the event was rejected."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - missing_event_id
+                  - missing_user_id
+                  - missing_session_id
+                  - missing_event_type
+                  - missing_event_timestamp
+                  - invalid_event_type
+                  - invalid_device
+                  - invalid_country
+                  - purchase_missing_price
+                  - purchase_invalid_price
+                  - product_event_missing_product_id
+                  - duplicate_event_id
