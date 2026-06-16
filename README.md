@@ -361,3 +361,13 @@ The pipeline follows a Bronze, Silver, and Gold architecture:
 * Gold creates business-ready tables for product analytics
 
 This structure makes the pipeline easier to test, debug, rebuild, and explain.
+
+### Custom dbt data tests
+
+The project also includes custom data tests for business rules:
+
+- purchase events must have a price
+- purchase price must be positive
+- non-purchase events should not have a price
+- product-related events must have a product_id
+- rejected events must have a rejection_reason
