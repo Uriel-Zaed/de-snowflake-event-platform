@@ -1,4 +1,8 @@
-{{ config(materialized='table') }}
+{{ config(
+    materialized='incremental',
+    unique_key='event_id',
+    incremental_strategy='merge'
+) }}
 
 WITH parsed_events AS (
 
@@ -26,6 +30,13 @@ WITH parsed_events AS (
         loaded_at
 
     FROM {{ source('raw', 'raw_events') }}
+
+    {% if is_incremental() %}
+        WHERE loaded_at > (
+            SELECT COALESCE(MAX(loaded_at), '1900-01-01'::TIMESTAMP_NTZ)
+            FROM {{ this }}
+        )
+    {% endif %}
 
 )
 
