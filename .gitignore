@@ -25,3 +25,10 @@ logs/
 .idea/
 
 .python-version
+
+
+# Airflow
+.airflow/
+.airflow-venv/
+airflow.db
+standalone_admin_password.txt
