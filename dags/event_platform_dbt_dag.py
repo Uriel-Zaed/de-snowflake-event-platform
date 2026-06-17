@@ -52,6 +52,12 @@ with DAG(
         execution_timeout=timedelta(minutes=10),
     )
 
+    dbt_source_freshness = BashOperator(
+        task_id="dbt_source_freshness",
+        bash_command=dbt_command("source freshness --select source:raw.raw_events"),
+        execution_timeout=timedelta(minutes=10),
+    )
+
     dbt_run = BashOperator(
         task_id="dbt_run",
         bash_command=dbt_command("run"),
@@ -64,4 +70,4 @@ with DAG(
         execution_timeout=timedelta(minutes=15),
     )
 
-    dbt_debug >> dbt_seed >> dbt_snapshot >> dbt_run >> dbt_test
+    dbt_debug >> dbt_seed >> dbt_snapshot >> dbt_source_freshness >> dbt_run >> dbt_test
