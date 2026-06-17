@@ -1,0 +1,11 @@
+product_id,product_name,category,brand,base_price,is_active,catalog_updated_at
+product_1,Wireless Mouse,Electronics,TechPro,34.99,true,2026-06-20 00:00:00
+product_2,Bluetooth Keyboard,Electronics,TechPro,59.99,true,2026-06-01 00:00:00
+product_3,Running Shoes,Sports,MoveMax,89.99,true,2026-06-01 00:00:00
+product_4,Yoga Mat,Sports,FitLife,24.99,true,2026-06-01 00:00:00
+product_5,Coffee Mug,Home,HomeBase,12.99,true,2026-06-01 00:00:00
+product_6,Desk Lamp,Home,Lightify,39.99,true,2026-06-01 00:00:00
+product_7,Backpack,Fashion,UrbanPack,49.99,true,2026-06-01 00:00:00
+product_8,Hoodie,Fashion,StreetWear,69.99,true,2026-06-01 00:00:00
+product_9,Protein Bar,Food,NutriGo,3.99,true,2026-06-01 00:00:00
+product_10,Water Bottle,Sports,HydroMax,19.99,true,2026-06-01 00:00:00
