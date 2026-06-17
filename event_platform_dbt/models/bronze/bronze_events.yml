@@ -2,69 +2,41 @@ version: 2
 
 models:
   - name: bronze_events
-    description: "Parsed and typed event records extracted from raw JSON events."
+    description: "Parsed event records extracted from raw JSON events. This layer preserves source data after basic parsing and may still contain invalid records."
 
     columns:
       - name: event_id
-        description: "Unique event identifier."
-        tests:
-          - not_null
-          - unique
+        description: "Unique event identifier from the source event. May be null if source data is invalid."
 
       - name: user_id
-        description: "User identifier."
-        tests:
-          - not_null
+        description: "User identifier from the source event."
 
       - name: session_id
-        description: "Session identifier."
-        tests:
-          - not_null
+        description: "Session identifier from the source event."
 
       - name: event_type
-        description: "Type of product event."
-        tests:
-          - not_null
-          - accepted_values:
-              arguments:
-                values:
-                  - view_product
-                  - add_to_cart
-                  - purchase
-                  - login
-                  - logout
-                  - search
+        description: "Type of product event from the source event."
 
       - name: event_timestamp
         description: "Timestamp when the event occurred."
-        tests:
-          - not_null
 
       - name: event_date
         description: "Date extracted from event_timestamp."
 
       - name: country
         description: "Country code."
-        tests:
-          - accepted_values:
-              arguments:
-                values:
-                  - IL
-                  - US
-                  - GB
-                  - DE
-                  - FR
-                  - ES
 
       - name: device
         description: "Device type."
-        tests:
-          - accepted_values:
-              arguments:
-                values:
-                  - ios
-                  - android
-                  - web
+
+      - name: product_id
+        description: "Product identifier for product-related events."
 
       - name: price
-        description: "Purchase price. Should only be populated for purchase events."
+        description: "Purchase price when available."
+
+      - name: source_filename
+        description: "Name of the source file."
+
+      - name: loaded_at
+        description: "Timestamp when the raw row was loaded into Snowflake."
