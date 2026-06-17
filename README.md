@@ -371,3 +371,19 @@ The project also includes custom data tests for business rules:
 - non-purchase events should not have a price
 - product-related events must have a product_id
 - rejected events must have a rejection_reason
+
+## Airflow Ingestion DAG
+
+The project includes a separate ingestion DAG:
+
+```text
+event_platform_ingestion_pipeline
+```
+
+generate_events_file
+   ↓
+upload_file_to_snowflake_stage
+   ↓
+copy_into_raw_events
+   ↓
+trigger_dbt_pipeline
