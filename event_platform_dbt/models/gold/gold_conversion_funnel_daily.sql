@@ -6,11 +6,11 @@ WITH user_daily_flags AS (
         event_date,
         user_id,
 
-        MAX(CASE WHEN event_type = 'view_product' THEN 1 ELSE 0 END) AS viewed_product,
-        MAX(CASE WHEN event_type = 'add_to_cart' THEN 1 ELSE 0 END) AS added_to_cart,
-        MAX(CASE WHEN event_type = 'purchase' THEN 1 ELSE 0 END) AS purchased
+        MAX(CASE WHEN is_product_view THEN 1 ELSE 0 END) AS viewed_product,
+        MAX(CASE WHEN is_add_to_cart THEN 1 ELSE 0 END) AS added_to_cart,
+        MAX(CASE WHEN is_purchase THEN 1 ELSE 0 END) AS purchased
 
-    FROM {{ ref('silver_events_clean') }}
+    FROM {{ ref('fact_events') }}
     GROUP BY
         event_date,
         user_id
