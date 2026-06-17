@@ -672,24 +672,6 @@ WHERE product_id = 'product_1'
 ORDER BY dbt_valid_from;
 ```
 
-## Interview Talking Points
-
-This project demonstrates a realistic ELT pipeline using Snowflake, dbt, and Airflow.
-
-Strong points to discuss:
-
-* Raw event data is loaded into Snowflake before transformation, following an ELT pattern.
-* Raw JSON is preserved in a `VARIANT` column for replay and debugging.
-* dbt manages transformation logic using modular SQL models, tests, documentation, and lineage.
-* The pipeline follows a layered warehouse architecture: Raw, Bronze, Silver, Core marts, and Gold.
-* The Silver layer separates clean records from rejected records instead of silently dropping invalid data.
-* The project includes a star schema with fact and dimension tables.
-* Product reference data is managed using dbt seeds.
-* Product catalog history is tracked using dbt snapshots.
-* Airflow separates ingestion orchestration from dbt transformation orchestration.
-* Source freshness checks prevent downstream models from running on stale raw data.
-* GitHub Actions CI validates the dbt project structure without requiring live Snowflake credentials.
-
 ## Final Project Summary
 
 This project simulates a realistic batch event data platform.
